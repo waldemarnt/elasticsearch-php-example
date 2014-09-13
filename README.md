@@ -9,3 +9,6 @@ Buscas
 
 e explicações
 
+Necessário composer.
+
+Após baixar execute um composer install
