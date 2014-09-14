@@ -11,6 +11,8 @@ class ElasticFactory
 	private $id;
 	private $data;
 	private $client;
+	//default data size of elasticsearch
+	private $size = 10;
 
 
 	public function __construct($index){
@@ -50,7 +52,8 @@ class ElasticFactory
 		}
 
 		$params['body']['query'] = $query;
-		var_dump($params);
+		$params['size'] = $this->size;
+
 		return $this->client->search($params);
 	}
 
@@ -74,6 +77,11 @@ class ElasticFactory
 		$this->data = $data;
 	}
 
+	public function setSize($size)
+	{
+		$this->size = $size;
+	}
+
 	public function getIndex()
 	{
 		return $this->index;
@@ -92,5 +100,10 @@ class ElasticFactory
 	public function getData()
 	{
 		return $this->data;
+	}
+
+	public function getSize()
+	{
+		return $this->size;
 	}
 }

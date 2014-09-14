@@ -3,6 +3,7 @@ include 'ElasticFactory.php';
 
 $ef = new ElasticFactory('my_project');
 
+$ef->setSize(100);
 $ef->setType('users');
 
 //elasticsearch auto generate a structure map, age is int
@@ -22,10 +23,13 @@ $return = $ef->create();
 echo $return['_id'].' has been saved <br/>';
 
 //now , we can set a id for this object, and change a field value to update
-$ef->setId($return['_id']);
+$ef->setId(1);
 
 $editData = [
-	'email'=>'waldemarnt@gmail.com'
+	'name'=>'Waldemar Neto',
+	'age'=>24,
+	'email'=>'waldemarnt@outlook.com',
+	'born'=>'1990/01/23'
 ];
 
 $ef->setData($editData);
@@ -49,16 +53,54 @@ if(isset($matchData['hits']['hits'])){
 	}
 }
 
-$matchAllQuery=[
-	'match_all'=>[]
+echo 'example with filters <br/>';
+
+//example with filters
+$filter = array();
+$filter['term']['name'] = 'waldemar';
+
+$query = array();
+$query['match']['age'] = 24;
+
+$filteredQuery = [
+	'filtered'=>[
+		'filter'=>$filter,
+		'query'=>$query
+	]
 ];
 
-$matchAllData = $ef->find($matchAllQuery);
 
-var_dump($matchAllData);
+$filteredData = $ef->find($filteredQuery);
 
-if(isset($matchAllData['hits']['hits'])){
-	foreach ($matchAllData['hits']['hits'] as $key => $hit) {
+if(isset($filteredData['hits']['hits'])){
+	foreach ($filteredData['hits']['hits'] as $key => $hit) {
+		echo $hit['_source']['name'].'<br/>';
+	}
+}
+
+echo 'example with date range filter <br/>';
+//example with date range filter
+$filter = array();
+$filter['range']['born'] =[
+	'gte'=>'1990/01/20',
+	'lte'=>'1990/01/24'
+];
+
+$query = array();
+$query['match_all'][] = [];
+
+$filteredByBorn = [
+	'filtered'=>[
+		'filter'=>$filter,
+		'query'=>$query
+	]
+];
+
+
+$filteredBorn = $ef->find($filteredByBorn);
+
+if(isset($filteredBorn['hits']['hits'])){
+	foreach ($filteredBorn['hits']['hits'] as $key => $hit) {
 		echo $hit['_source']['name'].'<br/>';
 	}
 }
