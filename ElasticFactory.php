@@ -1,8 +1,6 @@
 <?php 
 require 'vendor/autoload.php';
 
-$client = new Elasticsearch\Client();
-
 class ElasticFactory
 {
 	private $index;
