@@ -1,14 +1,28 @@
-elasticsearch-php-example
-=========================
+ElasticSearch com PHP
+=========
 
-Exemplo de uso da biblioteca PHP para elasticsearch.
+Instalação simples
 
-Criação e update de documents
+  - Baixe o repositorio
+  - Rode o composer
+  - Teste os exemplos
 
-Buscas
+ElasticSearch PHP e uma biblioteca oficial do elasticsearch para ser usado com php, criei alguns exemplos usando ela. Link da biblioteca [ElasticSearchPHP] [1]:
 
-e explicações
+Instalação
+--------------
 
-Necessário composer.
+```sh
+composer install
 
-Após baixar execute um composer install
+```
+License
+----
+
+MIT
+
+
+**Free Software, Hell Yeah!**
+
+[1]:http://www.elasticsearch.org/guide/en/elasticsearch/client/php-api/current/
+
