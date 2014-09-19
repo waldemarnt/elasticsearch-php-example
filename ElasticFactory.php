@@ -36,7 +36,7 @@ class ElasticFactory
 	{
 		$params['index'] = $this->index;
 		$params['type'] = $this->type;
-		$params['body'] = $this->data;
+		$params['body']['doc'] = $this->data;
 		$params['id'] = $this->id;
 
 		return $this->client->index($params);
